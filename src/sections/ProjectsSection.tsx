@@ -162,8 +162,7 @@ const ProjectsSection = () => {
                     <motion.div 
                       className="flex flex-1 w-full rounded-lg mt-auto bg-gradient-to-br from-violet-500 via-purple-500 to-blue-500 relative overflow-hidden"
                       animate={{
-                        scale: hoveredProject === idx ? 1.02 : 1,
-                        brightness: hoveredProject === idx ? 1.1 : 1
+                        scale: hoveredProject === idx ? 1.02 : 1
                       }}
                       transition={{ duration: 0.3 }}
                     >

@@ -177,22 +177,25 @@ const HeroSection = () => {
                   <div className="flex justify-between items-center mt-4">
                     <CardItem
                       translateZ={20}
-                      as="a"
-                      href="#contact"
                       className="px-3 py-1.5 rounded-lg text-xs font-medium dark:text-cyan-400 text-slate-700 hover:text-cyan-500 transition-colors"
                     >
-                      Contact →
+                      <a href="#contact" className="block w-full h-full">
+                        Contact →
+                      </a>
                     </CardItem>
                     <CardItem
                       translateZ={20}
-                      as="a"
-                      href="/Resume%201.pdf"
-                      download="Sumit_Kumar_Gupta_Resume.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
                       className="px-3 py-1.5 rounded-lg bg-slate-800 dark:bg-cyan-500 dark:text-slate-900 text-white text-xs font-bold hover:bg-slate-700 dark:hover:bg-cyan-600 transition-colors"
                     >
-                      Resume
+                      <a
+                        href="/Resume%201.pdf"
+                        download="Sumit_Kumar_Gupta_Resume.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-full h-full text-inherit no-underline"
+                      >
+                        Resume
+                      </a>
                     </CardItem>
                   </div>
                 </CardBody>
