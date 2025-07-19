@@ -5,6 +5,7 @@ import { PinContainer } from "@/components/ui/3d-pin";
 import { projects } from "@/data/projects";
 import CertificationModal from "@/components/CertificationModal";
 import { Search, Filter, ExternalLink, Github } from "lucide-react";
+import Image from "next/image";
 
 const ProjectsSection = () => {
   const [showCertifications, setShowCertifications] = useState(false);
@@ -124,10 +125,26 @@ const ProjectsSection = () => {
                         {project.title}
                       </h3>
                       <div className="flex space-x-2">
-                        {project.link && (
-                          <ExternalLink className="w-4 h-4 text-cyan-400 hover:text-cyan-300" />
+                        {project.link && project.link !== "#" && (
+                          <a 
+                            href={project.link} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="hover:scale-110 transition-transform duration-200"
+                          >
+                            <ExternalLink className="w-4 h-4 text-cyan-400 hover:text-cyan-300" />
+                          </a>
                         )}
-                        <Github className="w-4 h-4 text-gray-400 hover:text-white" />
+                        {project.githubLink && (
+                          <a 
+                            href={project.githubLink} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="hover:scale-110 transition-transform duration-200"
+                          >
+                            <Github className="w-4 h-4 text-gray-400 hover:text-white" />
+                          </a>
+                        )}
                       </div>
                     </div>
 
@@ -166,9 +183,23 @@ const ProjectsSection = () => {
                       }}
                       transition={{ duration: 0.3 }}
                     >
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                      <div className="absolute bottom-2 left-2 right-2">
-                        <div className="text-xs text-white/80 font-medium">
+                      {project.image && (
+                        <div className="absolute inset-0">
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            className="object-cover object-center"
+                            onError={(e) => {
+                              // Fallback to gradient if image fails to load
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                      <div className="absolute bottom-2 left-2 right-2 z-10">
+                        <div className="text-xs text-white/90 font-medium">
                           {project.techStack[0]} • {project.techStack[1]}
                         </div>
                       </div>
@@ -181,16 +212,35 @@ const ProjectsSection = () => {
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
-                          className="absolute inset-0 bg-gradient-to-t from-cyan-500/20 to-transparent rounded-lg flex items-center justify-center"
+                          className="absolute inset-0 bg-gradient-to-t from-cyan-500/20 to-transparent rounded-lg flex items-center justify-center z-20"
                         >
-                          <motion.button
-                            initial={{ scale: 0.8, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.8, opacity: 0 }}
-                            className="px-4 py-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-full text-white text-sm font-medium hover:bg-white/30 transition-all duration-300"
-                          >
-                            View Details
-                          </motion.button>
+                          {project.link && project.link !== "#" ? (
+                            <motion.a
+                              href={project.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              initial={{ scale: 0.8, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              exit={{ scale: 0.8, opacity: 0 }}
+                              className="px-4 py-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-full text-white text-sm font-medium hover:bg-white/30 transition-all duration-300 flex items-center space-x-2"
+                            >
+                              <span>View Live Demo</span>
+                              <ExternalLink className="w-3 h-3" />
+                            </motion.a>
+                          ) : (
+                            <motion.a
+                              href={project.githubLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              initial={{ scale: 0.8, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              exit={{ scale: 0.8, opacity: 0 }}
+                              className="px-4 py-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-full text-white text-sm font-medium hover:bg-white/30 transition-all duration-300 flex items-center space-x-2"
+                            >
+                              <span>View Code</span>
+                              <Github className="w-3 h-3" />
+                            </motion.a>
+                          )}
                         </motion.div>
                       )}
                     </AnimatePresence>
