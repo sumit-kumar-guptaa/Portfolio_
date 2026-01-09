@@ -1,141 +1,166 @@
 "use client";
 import { motion } from "framer-motion";
 import { skills } from "@/data/skills";
+import { useTheme } from "@/context/ThemeContext";
 
 const SkillsSection = () => {
-  const skillLevels = {
-    "Python": 95,
-    "TensorFlow": 90,
-    "PyTorch": 85,
-    "Scikit-learn": 88,
-    "Pandas": 92,
-    "NumPy": 90,
-    "JavaScript": 85,
-    "TypeScript": 80,
-    "React": 88,
-    "Next.js": 82,
-    "Node.js": 80,
-    "MongoDB": 75,
-    "PostgreSQL": 78,
-    "MySQL": 80,
-    "AWS": 75,
-    "Docker": 70,
-    "Git": 85,
-    "Linux": 80
-  };
-
-  const SkillBar = ({ skill, level }: { skill: string; level: number }) => (
-    <div className="mb-4">
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-gray-300 text-sm font-medium">{skill}</span>
-        <span className="text-cyan-400 text-sm">{level}%</span>
-      </div>
-      <div className="w-full bg-gray-700 rounded-full h-2">
-        <motion.div
-          className="bg-gradient-to-r from-cyan-500 to-blue-500 h-2 rounded-full"
-          initial={{ width: 0 }}
-          whileInView={{ width: `${level}%` }}
-          transition={{ duration: 1.5, delay: 0.2 }}
-        />
-      </div>
-    </div>
-  );
-
+  const { isDark } = useTheme();
+  
   return (
-    <section id="skills" className="min-h-screen bg-slate-950 py-20 px-6">
-      <div className="max-w-6xl mx-auto">
-        <motion.h2 
-          initial={{ opacity: 0, y: -50 }}
+    <section id="skills" className={`min-h-screen py-24 px-6 relative overflow-hidden transition-colors duration-500 ${isDark ? 'bg-[#080808]' : 'bg-[#fafafa]'}`}>
+      {/* Elegant Background Effects */}
+      <div className={`absolute inset-0 ${isDark ? 'bg-gradient-to-b from-[#080808] via-[#0a0a0a] to-[#080808]' : 'bg-gradient-to-b from-[#fafafa] via-[#f5f5f5] to-[#fafafa]'}`}></div>
+      <div className={`absolute top-1/4 left-0 w-[500px] h-[500px] rounded-full blur-3xl ${isDark ? 'bg-neutral-600/5' : 'bg-neutral-400/10'}`}></div>
+      <div className={`absolute bottom-1/4 right-0 w-[500px] h-[500px] rounded-full blur-3xl ${isDark ? 'bg-neutral-500/5' : 'bg-neutral-300/10'}`}></div>
+      
+      {/* Subtle Grid Pattern */}
+      <div className={`absolute inset-0 bg-[size:60px_60px] ${isDark ? 'bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)]' : 'bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)]'}`}></div>
+      
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Section Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-4xl md:text-6xl font-bold text-center text-white mb-12"
+          className="text-center mb-20"
         >
-          Skills & Expertise
-        </motion.h2>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium mb-6 backdrop-blur-sm ${
+              isDark 
+                ? 'bg-neutral-900/60 border border-neutral-800/50 text-neutral-300' 
+                : 'bg-white border border-neutral-200 text-neutral-600 shadow-sm'
+            }`}
+          >
+            <span className={`w-2 h-2 rounded-full animate-pulse ${isDark ? 'bg-white' : 'bg-neutral-900'}`}></span>
+            Technical Expertise
+          </motion.div>
+          <h2 className={`text-4xl md:text-5xl lg:text-6xl font-light mb-6 tracking-tight ${isDark ? 'text-white' : 'text-neutral-900'}`}>
+            Skills & <span className={`font-semibold ${isDark ? 'text-neutral-300' : 'text-neutral-600'}`}>Technologies</span>
+          </h2>
+          <p className={`max-w-xl mx-auto text-lg font-light leading-relaxed ${isDark ? 'text-neutral-400' : 'text-neutral-600'}`}>
+            Backend-focused Software Engineer specializing in Java ecosystem, AI/ML solutions, and cloud-native architectures
+          </p>
+        </motion.div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Skill Categories */}
-          <div className="space-y-8">
-            {skills.map((skillCategory, idx) => (
-              <motion.div
-                key={skillCategory.category}
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 hover:scale-105"
-              >
-                <h3 className="text-xl font-bold text-cyan-400 mb-4 flex items-center">
-                  <span className="w-2 h-2 bg-cyan-400 rounded-full mr-3"></span>
-                  {skillCategory.category}
-                </h3>
-                <div className="grid grid-cols-2 gap-2">
+        {/* Skill Categories Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {skills.map((skillCategory, idx) => (
+            <motion.div
+              key={skillCategory.category}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: idx * 0.1 }}
+              className="group relative"
+            >
+              {/* Elegant Hover Glow */}
+              <div className={`absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-30 blur-sm transition-all duration-700 ${isDark ? 'bg-neutral-600/20' : 'bg-neutral-400/30'}`}></div>
+              
+              <div className={`relative backdrop-blur-xl rounded-2xl p-7 h-full transition-all duration-500 group-hover:translate-y-[-4px] group-hover:shadow-2xl ${
+                isDark 
+                  ? 'bg-neutral-900/60 border border-neutral-800/50 hover:border-neutral-600 group-hover:shadow-neutral-900/50' 
+                  : 'bg-white border border-neutral-200 hover:border-neutral-300 shadow-lg group-hover:shadow-neutral-200/50'
+              }`}>
+                {/* Category Header */}
+                <div className="flex items-center gap-4 mb-6">
+                  <div className={`p-3 rounded-xl ${isDark ? 'bg-neutral-800/60 border border-neutral-700/30' : 'bg-neutral-100 border border-neutral-200'}`}>
+                    <span className="text-2xl">{skillCategory.icon}</span>
+                  </div>
+                  <h3 className={`text-lg font-medium tracking-wide transition-colors ${isDark ? 'text-neutral-100 group-hover:text-white' : 'text-neutral-800 group-hover:text-neutral-900'}`}>
+                    {skillCategory.category}
+                  </h3>
+                </div>
+                
+                {/* Skills List */}
+                <div className="flex flex-wrap gap-2.5">
                   {skillCategory.items.map((skill, skillIdx) => (
-                    <motion.div
+                    <motion.span
                       key={skillIdx}
-                      initial={{ opacity: 0, scale: 0.8 }}
+                      initial={{ opacity: 0, scale: 0.9 }}
                       whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.3, delay: (idx * 0.1) + (skillIdx * 0.05) }}
-                      className="bg-white/5 rounded-lg px-3 py-2 text-gray-300 text-sm hover:bg-cyan-500/20 transition-colors duration-300"
+                      transition={{ duration: 0.3, delay: (idx * 0.08) + (skillIdx * 0.04) }}
+                      className={`px-3.5 py-2 rounded-lg text-sm font-light backdrop-blur-sm transition-all duration-300 cursor-default ${
+                        isDark 
+                          ? 'bg-neutral-800/60 text-neutral-300 border border-neutral-700/40 hover:border-neutral-500 hover:text-white hover:bg-neutral-700/60' 
+                          : 'bg-neutral-100 text-neutral-600 border border-neutral-200 hover:border-neutral-300 hover:text-neutral-900 hover:bg-neutral-50'
+                      }`}
                     >
                       {skill}
-                    </motion.div>
+                    </motion.span>
                   ))}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Core Tech Stack - Minimalist Pills */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-24"
+        >
+          <div className="text-center mb-10">
+            <h3 className={`text-xl font-light tracking-wider uppercase ${isDark ? 'text-neutral-400' : 'text-neutral-500'}`}>
+              Core Technologies
+            </h3>
+            <div className={`w-16 h-px mx-auto mt-4 ${isDark ? 'bg-gradient-to-r from-transparent via-neutral-600 to-transparent' : 'bg-gradient-to-r from-transparent via-neutral-400 to-transparent'}`}></div>
+          </div>
+          
+          <div className="flex flex-wrap justify-center gap-4">
+            {[
+              { name: "Java" },
+              { name: "Spring Boot" },
+              { name: "Spring AI" },
+              { name: "Hibernate" },
+              { name: "Python" },
+              { name: "LangChain" },
+              { name: "LangGraph" },
+              { name: "MCP" },
+              { name: "Docker" },
+              { name: "AWS" },
+              { name: "MySQL" },
+              { name: "Git" }
+            ].map((tech, idx) => (
+              <motion.div
+                key={tech.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: idx * 0.05 }}
+                whileHover={{ y: -6, scale: 1.05 }}
+                className="group cursor-pointer"
+              >
+                <div className="relative">
+                  <div className={`absolute inset-0 rounded-full blur-lg opacity-0 group-hover:opacity-40 transition-all duration-500 ${isDark ? 'bg-neutral-500/20' : 'bg-neutral-400/30'}`}></div>
+                  <div className={`relative px-6 py-2.5 backdrop-blur-sm rounded-full transition-all duration-300 ${
+                    isDark 
+                      ? 'bg-neutral-900/80 border border-neutral-700/50 group-hover:border-neutral-500' 
+                      : 'bg-white border border-neutral-200 group-hover:border-neutral-300 shadow-sm'
+                  }`}>
+                    <span className={`font-medium text-sm transition-colors ${isDark ? 'text-neutral-300 group-hover:text-white' : 'text-neutral-600 group-hover:text-neutral-900'}`}>
+                      {tech.name}
+                    </span>
+                  </div>
                 </div>
               </motion.div>
             ))}
           </div>
+        </motion.div>
 
-          {/* Skill Levels */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8"
-          >
-            <h3 className="text-2xl font-bold text-white mb-8 text-center">
-              Proficiency Levels
-            </h3>
-            <div className="space-y-6">
-              {Object.entries(skillLevels).slice(0, 12).map(([skill, level], idx) => (
-                <motion.div
-                  key={skill}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: idx * 0.1 }}
-                >
-                  <SkillBar skill={skill} level={level} />
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Tech Stack Icons */}
+        {/* Bottom Decorative Element */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="mt-16"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.6 }}
+          className="flex justify-center mt-16"
         >
-          <h3 className="text-2xl font-bold text-center text-white mb-8">
-            Tech Stack
-          </h3>
-          <div className="flex flex-wrap justify-center gap-6">
-            {[
-              "Python", "TensorFlow", "PyTorch", "React", "Next.js", "Node.js",
-              "MongoDB", "PostgreSQL", "AWS", "Docker", "Git", "Linux"
-            ].map((tech, idx) => (
-              <motion.div
-                key={tech}
-                initial={{ opacity: 0, scale: 0 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                className="bg-gradient-to-br from-cyan-500/20 to-blue-500/20 backdrop-blur-md border border-cyan-500/30 rounded-xl px-4 py-3 text-white font-medium hover:from-cyan-500/30 hover:to-blue-500/30 transition-all duration-300 cursor-pointer"
-              >
-                {tech}
-              </motion.div>
-            ))}
+          <div className="flex items-center gap-3">
+            <div className={`w-12 h-px ${isDark ? 'bg-gradient-to-r from-transparent to-neutral-600' : 'bg-gradient-to-r from-transparent to-neutral-400'}`}></div>
+            <div className={`w-2 h-2 rounded-full ${isDark ? 'bg-neutral-600' : 'bg-neutral-400'}`}></div>
+            <div className={`w-12 h-px ${isDark ? 'bg-gradient-to-l from-transparent to-neutral-600' : 'bg-gradient-to-l from-transparent to-neutral-400'}`}></div>
           </div>
         </motion.div>
       </div>

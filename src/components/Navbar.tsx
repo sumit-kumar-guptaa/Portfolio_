@@ -1,15 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Moon, Sun } from "lucide-react";
+import { useTheme } from "@/context/ThemeContext";
 
 const Navbar = () => {
-  const [isDark, setIsDark] = useState(true);
+  const { isDark, toggleTheme } = useTheme();
   const [activeSection, setActiveSection] = useState("home");
-
-  const toggleDarkMode = () => {
-    setIsDark(!isDark);
-    document.documentElement.classList.toggle("dark");
-  };
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const navItems = [
     { name: "Home", href: "#home" },
@@ -22,6 +19,8 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+      
       const sections = navItems.map(item => item.href.slice(1));
       const scrollPosition = window.scrollY + 100;
 
@@ -53,37 +52,55 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Professional Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800">
-        <div className="max-w-6xl mx-auto px-6 py-4">
+      {/* Premium Navigation Bar */}
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled 
+          ? isDark 
+            ? 'bg-[#080808]/95 backdrop-blur-xl border-b border-neutral-800/50 shadow-lg shadow-black/20'
+            : 'bg-white/95 backdrop-blur-xl border-b border-neutral-200 shadow-lg shadow-neutral-200/50'
+          : 'bg-transparent'
+      }`}>
+        <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             
             {/* Logo/Name */}
-            <div className="text-white font-bold text-lg">
-              Sumit Kumar <span className="text-cyan-400">Gupta</span>
+            <div className={`font-bold text-lg ${isDark ? 'text-white' : 'text-neutral-900'}`}>
+              <span>Sumit Kumar</span> <span className={isDark ? 'text-neutral-400' : 'text-neutral-500'}>Gupta</span>
             </div>
 
             {/* Navigation Items */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-1">
               {navItems.map((item) => (
                 <button
                   key={item.name}
                   onClick={() => handleNavClick(item.href)}
-                  className={`text-sm font-medium transition-colors duration-200 ${
+                  className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg ${
                     activeSection === item.href.slice(1)
-                      ? "text-cyan-400 border-b-2 border-cyan-400 pb-1"
-                      : "text-gray-300 hover:text-white"
+                      ? isDark ? "text-white" : "text-neutral-900"
+                      : isDark ? "text-neutral-400 hover:text-white" : "text-neutral-500 hover:text-neutral-900"
                   }`}
                 >
-                  {item.name}
+                  {activeSection === item.href.slice(1) && (
+                    <span className={`absolute inset-0 rounded-lg border ${
+                      isDark 
+                        ? 'bg-neutral-800/60 border-neutral-700/50' 
+                        : 'bg-neutral-100 border-neutral-200'
+                    }`}></span>
+                  )}
+                  <span className="relative">{item.name}</span>
                 </button>
               ))}
             </div>
 
             {/* Dark Mode Toggle */}
             <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-gray-400 hover:text-white transition-colors duration-200"
+              onClick={toggleTheme}
+              className={`p-2.5 rounded-xl transition-all duration-300 ${
+                isDark 
+                  ? 'bg-neutral-900/60 border border-neutral-800/50 text-neutral-400 hover:text-white hover:border-neutral-600'
+                  : 'bg-neutral-100 border border-neutral-200 text-neutral-600 hover:text-neutral-900 hover:border-neutral-300'
+              }`}
+              aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
             >
               {isDark ? <Sun size={18} /> : <Moon size={18} />}
             </button>

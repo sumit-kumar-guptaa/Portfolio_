@@ -1,56 +1,77 @@
 export const skills = [
   {
-    category: "Core Data Science & AI",
+    category: "Backend Development",
+    icon: "⚡",
+    gradient: "from-slate-400 via-zinc-300 to-neutral-400",
     items: [
-      "Machine Learning (Scikit-learn, XGBoost, LightGBM)",
-      "Deep Learning (TensorFlow, Keras, PyTorch)",
-      "Natural Language Processing (spaCy, NLTK, Hugging Face Transformers)",
-      "LLM Integration (LangChain, Autogen, RAG, LangGraph)",
-      "Data Analysis & Visualization (Pandas, NumPy, Matplotlib, Seaborn, Plotly)"
+      "Java (Core Java, OOP, Collections, Streams)",
+      "Spring Framework (Spring Core, Spring MVC)",
+      "Spring Boot (Microservices, REST APIs)",
+      "Hibernate (ORM, JPA, Database Mapping)",
+      "Spring AI (AI-powered Backend)",
+      "RESTful API Design & Development"
     ]
   },
   {
-    category: "Programming & Scripting",
+    category: "AI & Machine Learning",
+    icon: "🤖",
+    gradient: "from-cyan-300 via-sky-400 to-blue-400",
     items: [
+      "LangChain (LLM Applications)",
+      "LangGraph (Agent Workflows)",
+      "MCP (Model Context Protocol)",
       "Python (Advanced)",
-      "Java (for DSA and backend logic)",
-      "SQL (Joins, Indexing, Optimization)",
-      "Shell Scripting"
+      "Machine Learning (Scikit-learn, XGBoost)",
+      "NLP (Natural Language Processing)"
     ]
   },
   {
-    category: "Web & API Development",
+    category: "DevOps & Cloud",
+    icon: "☁️",
+    gradient: "from-emerald-300 via-teal-400 to-cyan-400",
     items: [
-      "FastAPI, Flask (Backend APIs)",
-      "React.js, Next.js (Frontend - understanding/UI integration)",
-      "RESTful API Development",
-      "Web Scraping (BeautifulSoup, Selenium)"
-    ]
-  },
-  {
-    category: "MLOps & Deployment",
-    items: [
-      "Docker, CI/CD Pipelines",
-      "Model Deployment (Render, Railway, Vercel, AWS EC2)",
-      "Git & GitHub",
-      "Streamlit / Gradio (for AI demos)"
+      "Docker (Containerization)",
+      "AWS (EC2, S3, Lambda, RDS)",
+      "Git & GitHub (Version Control)",
+      "CI/CD Pipelines",
+      "Linux/Shell Scripting",
+      "Kubernetes (Basics)"
     ]
   },
   {
     category: "Databases & Storage",
+    icon: "🗄️",
+    gradient: "from-amber-300 via-yellow-400 to-orange-300",
     items: [
-      "MongoDB, MySQL",
-      "Firebase (optional for projects)",
-      "Vector DBs: FAISS, ChromaDB, Pinecone (for LLM apps)"
+      "MySQL (Advanced SQL, Optimization)",
+      "PostgreSQL",
+      "MongoDB (NoSQL)",
+      "Redis (Caching)",
+      "Vector DBs (FAISS, ChromaDB, Pinecone)"
+    ]
+  },
+  {
+    category: "Web Technologies",
+    icon: "🌐",
+    gradient: "from-rose-300 via-pink-400 to-fuchsia-400",
+    items: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "FastAPI & Flask",
+      "RESTful & GraphQL APIs"
     ]
   },
   {
     category: "Tools & Platforms",
+    icon: "🔧",
+    gradient: "from-indigo-300 via-violet-400 to-purple-400",
     items: [
-      "Jupyter Notebook, VSCode, Google Colab",
-      "Kaggle (Projects and Competitions)",
-      "Hugging Face, Weights & Biases (Model Tracking)",
-      "Postman (API Testing)"
+      "IntelliJ IDEA & VS Code",
+      "Postman (API Testing)",
+      "Maven & Gradle",
+      "Jupyter & Google Colab",
+      "Jira & Confluence"
     ]
   }
 ];

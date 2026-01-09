@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Sumit Kumar Gupta - Data Scientist & AI Developer",
-  description: "Professional portfolio of Sumit Kumar Gupta - Aspiring Data Scientist & AI Developer specializing in Full-Stack & ML Projects",
+  title: "Sumit Kumar Gupta - Backend Developer & AI Engineer",
+  description: "Professional portfolio of Sumit Kumar Gupta - Aspiring Backend Developer & AI Engineer specializing in Java, Spring Boot & AI/ML",
 };
 
 export default function RootLayout({
@@ -15,9 +16,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body className={inter.className}>
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

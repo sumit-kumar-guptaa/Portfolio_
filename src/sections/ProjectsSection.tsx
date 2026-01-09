@@ -4,10 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { PinContainer } from "@/components/ui/3d-pin";
 import { projects } from "@/data/projects";
 import CertificationModal from "@/components/CertificationModal";
-import { Search, Filter, ExternalLink, Github } from "lucide-react";
+import { Search, ExternalLink, Github, Award } from "lucide-react";
 import Image from "next/image";
+import { useTheme } from "@/context/ThemeContext";
 
 const ProjectsSection = () => {
+  const { isDark } = useTheme();
   const [showCertifications, setShowCertifications] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
@@ -33,16 +35,43 @@ const ProjectsSection = () => {
   }, [selectedCategory, searchTerm]);
 
   return (
-    <section id="projects" className="min-h-screen bg-slate-900 py-20 px-6">
-      <div className="max-w-7xl mx-auto">
-        <motion.h2 
-          initial={{ opacity: 0, y: -50 }}
+    <section id="projects" className={`min-h-screen py-24 px-6 relative overflow-hidden transition-colors duration-500 ${isDark ? 'bg-[#080808]' : 'bg-[#fafafa]'}`}>
+      {/* Elegant Background */}
+      <div className={`absolute inset-0 ${isDark ? 'bg-gradient-to-b from-[#080808] via-[#0a0a0a] to-[#080808]' : 'bg-gradient-to-b from-[#fafafa] via-[#f5f5f5] to-[#fafafa]'}`}></div>
+      <div className={`absolute top-1/2 left-0 w-[500px] h-[500px] rounded-full blur-[200px] ${isDark ? 'bg-neutral-600/5' : 'bg-neutral-400/10'}`}></div>
+      <div className={`absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full blur-[150px] ${isDark ? 'bg-neutral-500/5' : 'bg-neutral-300/10'}`}></div>
+      
+      {/* Subtle Grid */}
+      <div className={`absolute inset-0 bg-[size:60px_60px] ${isDark ? 'bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)]' : 'bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)]'}`}></div>
+      
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Section Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-4xl md:text-6xl font-bold text-center text-white mb-12"
+          className="text-center mb-16"
         >
-          Featured Projects
-        </motion.h2>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium mb-6 backdrop-blur-sm ${
+              isDark 
+                ? 'bg-neutral-900/60 border border-neutral-800/50 text-neutral-300' 
+                : 'bg-white border border-neutral-200 text-neutral-600 shadow-sm'
+            }`}
+          >
+            <span className={`w-2 h-2 rounded-full ${isDark ? 'bg-white' : 'bg-neutral-900'}`}></span>
+            Featured Work
+          </motion.div>
+          <h2 className={`text-4xl md:text-5xl lg:text-6xl font-light mb-6 tracking-tight ${isDark ? 'text-white' : 'text-neutral-900'}`}>
+            My <span className={`font-semibold ${isDark ? 'text-neutral-300' : 'text-neutral-600'}`}>Projects</span>
+          </h2>
+          <p className={`max-w-xl mx-auto text-lg font-light ${isDark ? 'text-neutral-400' : 'text-neutral-600'}`}>
+            A showcase of my technical expertise and creative problem-solving
+          </p>
+        </motion.div>
 
         {/* Search and Filter */}
         <motion.div
@@ -53,28 +82,36 @@ const ProjectsSection = () => {
         >
           {/* Search Bar */}
           <div className="relative max-w-md mx-auto">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Search className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 ${isDark ? 'text-neutral-500' : 'text-neutral-400'}`} />
             <input
               type="text"
               placeholder="Search projects..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all duration-300"
+              className={`w-full pl-12 pr-4 py-3.5 rounded-xl focus:outline-none transition-all duration-300 backdrop-blur-sm ${
+                isDark 
+                  ? 'bg-neutral-900/60 border border-neutral-800/50 text-white placeholder-neutral-500 focus:border-neutral-600 focus:bg-neutral-800/80' 
+                  : 'bg-white border border-neutral-200 text-neutral-900 placeholder-neutral-400 focus:border-neutral-300 focus:bg-neutral-50 shadow-sm'
+              }`}
             />
           </div>
 
           {/* Category Filter */}
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-2">
             {categories.slice(0, 8).map((category) => (
               <motion.button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                   selectedCategory === category
-                    ? "bg-cyan-500 text-white shadow-lg"
-                    : "bg-white/10 text-gray-300 hover:bg-white/20 border border-white/20"
+                    ? isDark 
+                      ? "bg-white text-neutral-900" 
+                      : "bg-neutral-900 text-white"
+                    : isDark 
+                      ? "bg-neutral-900/60 border border-neutral-800/50 text-neutral-400 hover:text-white hover:border-neutral-600" 
+                      : "bg-white border border-neutral-200 text-neutral-500 hover:text-neutral-900 hover:border-neutral-300 shadow-sm"
                 }`}
               >
                 {category}
@@ -89,7 +126,7 @@ const ProjectsSection = () => {
           whileInView={{ opacity: 1 }}
           className="text-center mb-8"
         >
-          <p className="text-gray-400">
+          <p className={`text-sm ${isDark ? 'text-neutral-500' : 'text-neutral-500'}`}>
             Showing {filteredProjects.length} of {projects.length} projects
           </p>
         </motion.div>
@@ -118,10 +155,10 @@ const ProjectsSection = () => {
                   title={project.title}
                   href={project.link}
                 >
-                  <div className="flex basis-full flex-col p-6 tracking-tight text-slate-100/50 sm:basis-1/2 w-[22rem] h-[25rem]">
+                  <div className="flex basis-full flex-col p-6 tracking-tight text-neutral-100/50 sm:basis-1/2 w-[22rem] h-[25rem]">
                     {/* Project Header */}
                     <div className="flex items-start justify-between mb-3">
-                      <h3 className="max-w-xs !pb-2 !m-0 font-bold text-lg text-slate-100 line-clamp-2">
+                      <h3 className="max-w-xs !pb-2 !m-0 font-semibold text-lg text-white line-clamp-2">
                         {project.title}
                       </h3>
                       <div className="flex space-x-2">
@@ -132,7 +169,7 @@ const ProjectsSection = () => {
                             rel="noopener noreferrer"
                             className="hover:scale-110 transition-transform duration-200"
                           >
-                            <ExternalLink className="w-4 h-4 text-cyan-400 hover:text-cyan-300" />
+                            <ExternalLink className="w-4 h-4 text-neutral-400 hover:text-white" />
                           </a>
                         )}
                         {project.githubLink && (
@@ -142,7 +179,7 @@ const ProjectsSection = () => {
                             rel="noopener noreferrer"
                             className="hover:scale-110 transition-transform duration-200"
                           >
-                            <Github className="w-4 h-4 text-gray-400 hover:text-white" />
+                            <Github className="w-4 h-4 text-neutral-400 hover:text-white" />
                           </a>
                         )}
                       </div>
@@ -150,7 +187,7 @@ const ProjectsSection = () => {
 
                     {/* Project Description */}
                     <div className="text-sm !m-0 !p-0 font-normal flex-1">
-                      <span className="text-slate-400 line-clamp-4">
+                      <span className="text-neutral-400 line-clamp-4">
                         {project.description}
                       </span>
                     </div>
@@ -163,13 +200,13 @@ const ProjectsSection = () => {
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: techIdx * 0.1 }}
-                          className="px-2 py-1 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 text-xs rounded-lg border border-cyan-500/30 hover:from-cyan-500/30 hover:to-blue-500/30 transition-all duration-300"
+                          className="px-2.5 py-1 bg-neutral-800/80 text-neutral-300 text-xs rounded-md border border-neutral-700/50 hover:border-neutral-600 transition-all duration-300"
                         >
                           {tech}
                         </motion.span>
                       ))}
                       {project.techStack.length > 4 && (
-                        <span className="px-2 py-1 text-xs text-gray-400">
+                        <span className="px-2 py-1 text-xs text-neutral-500">
                           +{project.techStack.length - 4} more
                         </span>
                       )}
@@ -177,7 +214,7 @@ const ProjectsSection = () => {
 
                     {/* Project Visual */}
                     <motion.div 
-                      className="flex flex-1 w-full rounded-lg mt-auto bg-gradient-to-br from-violet-500 via-purple-500 to-blue-500 relative overflow-hidden"
+                      className="flex flex-1 w-full rounded-lg mt-auto bg-gradient-to-br from-neutral-800 via-neutral-700 to-neutral-800 relative overflow-hidden"
                       animate={{
                         scale: hoveredProject === idx ? 1.02 : 1
                       }}
@@ -191,15 +228,14 @@ const ProjectsSection = () => {
                             fill
                             className="object-cover object-center"
                             onError={(e) => {
-                              // Fallback to gradient if image fails to load
                               e.currentTarget.style.display = 'none';
                             }}
                           />
                         </div>
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/80 via-neutral-900/30 to-transparent" />
                       <div className="absolute bottom-2 left-2 right-2 z-10">
-                        <div className="text-xs text-white/90 font-medium">
+                        <div className="text-xs text-neutral-300 font-medium">
                           {project.techStack[0]} • {project.techStack[1]}
                         </div>
                       </div>
@@ -212,7 +248,7 @@ const ProjectsSection = () => {
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
-                          className="absolute inset-0 bg-gradient-to-t from-cyan-500/20 to-transparent rounded-lg flex items-center justify-center z-20"
+                          className="absolute inset-0 bg-gradient-to-t from-neutral-900/60 to-transparent rounded-lg flex items-center justify-center z-20"
                         >
                           {project.link && project.link !== "#" ? (
                             <motion.a
@@ -222,9 +258,9 @@ const ProjectsSection = () => {
                               initial={{ scale: 0.8, opacity: 0 }}
                               animate={{ scale: 1, opacity: 1 }}
                               exit={{ scale: 0.8, opacity: 0 }}
-                              className="px-4 py-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-full text-white text-sm font-medium hover:bg-white/30 transition-all duration-300 flex items-center space-x-2"
+                              className="px-4 py-2 bg-white text-neutral-900 backdrop-blur-md rounded-full text-sm font-medium hover:bg-neutral-100 transition-all duration-300 flex items-center space-x-2"
                             >
-                              <span>View Live Demo</span>
+                              <span>View Project</span>
                               <ExternalLink className="w-3 h-3" />
                             </motion.a>
                           ) : (
@@ -235,7 +271,7 @@ const ProjectsSection = () => {
                               initial={{ scale: 0.8, opacity: 0 }}
                               animate={{ scale: 1, opacity: 1 }}
                               exit={{ scale: 0.8, opacity: 0 }}
-                              className="px-4 py-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-full text-white text-sm font-medium hover:bg-white/30 transition-all duration-300 flex items-center space-x-2"
+                              className="px-4 py-2 bg-white text-neutral-900 backdrop-blur-md rounded-full text-sm font-medium hover:bg-neutral-100 transition-all duration-300 flex items-center space-x-2"
                             >
                               <span>View Code</span>
                               <Github className="w-3 h-3" />
@@ -258,13 +294,17 @@ const ProjectsSection = () => {
             animate={{ opacity: 1 }}
             className="text-center py-12"
           >
-            <div className="text-gray-400 text-lg mb-4">No projects found</div>
+            <div className={`text-lg mb-4 ${isDark ? 'text-neutral-400' : 'text-neutral-500'}`}>No projects found</div>
             <button
               onClick={() => {
                 setSearchTerm("");
                 setSelectedCategory("All");
               }}
-              className="px-6 py-2 bg-cyan-500/20 text-cyan-400 rounded-full hover:bg-cyan-500/30 transition-all duration-300"
+              className={`px-6 py-2 rounded-lg transition-all duration-300 ${
+                isDark 
+                  ? 'bg-neutral-800 text-white hover:bg-neutral-700' 
+                  : 'bg-neutral-200 text-neutral-900 hover:bg-neutral-300'
+              }`}
             >
               Clear Filters
             </button>
@@ -280,15 +320,16 @@ const ProjectsSection = () => {
         >
           <motion.button 
             onClick={() => setShowCertifications(true)}
-            whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(6, 182, 212, 0.3)" }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-full hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 shadow-lg relative overflow-hidden group"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className={`px-8 py-4 font-semibold rounded-xl transition-all duration-300 flex items-center gap-3 ${
+              isDark 
+                ? 'bg-white text-neutral-900 hover:bg-neutral-100' 
+                : 'bg-neutral-900 text-white hover:bg-neutral-800'
+            }`}
           >
-            <span className="relative z-10 flex items-center space-x-2">
-              <span>View Certifications</span>
-              <ExternalLink className="w-4 h-4" />
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <Award className="w-5 h-5" />
+            <span>View Certifications</span>
           </motion.button>
         </motion.div>
       </div>
